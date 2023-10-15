@@ -18,19 +18,15 @@ jobs:
         node-version: 18
     - name : Patch
       run: |
+        git config --global user.name "${GITHUB_ACTOR}"
+        git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
         npm version patch > version.txt
+        git push origin main
     - name: Read version.txt
       id: commit
       uses: juliangruber/read-file-action@v1
       with:
           path: ./version.txt
-    - name: Push
-      run: |
-        git config --global user.name "${GITHUB_ACTOR}"
-        git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-        git add package.json
-        git commit -m "${{ (steps.commit.outputs.content) }}"
-        echo ${{ (steps.commit.outputs.content) }}
     - name: Github Release 최신 tag 받아오기
       id: tag_version
       uses: mathieudutour/github-tag-action@v6.1
