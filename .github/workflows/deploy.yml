@@ -21,7 +21,7 @@ jobs:
         git config --global user.name "${GITHUB_ACTOR}"
         git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
         npm version patch > version.txt
-        git push origin main
+        git push origin
     - name: Read version.txt
       id: commit
       uses: juliangruber/read-file-action@v1
@@ -35,5 +35,6 @@ jobs:
     - name: Create a GitHub release
       uses: ncipollo/release-action@v1
       with:
+        tag: ${{ steps.commit.outputs.content}}
         name: Release ${{ steps.commit.outputs.content}}
         body: ${{ steps.tag_version.outputs.changelog }}
