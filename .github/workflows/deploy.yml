@@ -39,6 +39,5 @@ jobs:
     - name: Create a GitHub release
       uses: ncipollo/release-action@v1
       with:
-        tag: ${{ steps.commit.outputs.content}}
         name: Release ${{ steps.commit.outputs.content}}
         body: ${{ steps.tag_version.outputs.changelog }}
